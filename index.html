@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>歡迎來到 SDGs 永續發展目標</title>
+    <style>
+        /* 基礎樣式重設 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, "Microsoft JhengHei";
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 導覽列 */
+        header {
+            background-color: #ffffff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0078d4; /* 聯合國藍色調 */
+        }
+
+        header nav a {
+            text-decoration: none;
+            color: #555;
+            margin-left: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        header nav a:hover {
+            color: #0078d4;
+        }
+
+        /* 主視覺區域 (Hero Section) */
+        .hero {
+            background: linear-gradient(135deg, #0078d4 0%, #00b7c3 100%);
+            color: white;
+            padding: 5rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            opacity: 0.9;
+        }
+
+        .hero .btn {
+            display: inline-block;
+            background-color: #fff;
+            color: #0078d4;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .hero .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        /* 內容介紹區 */
+        .intro-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .intro-section h2 {
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .intro-section h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background-color: #0078d4;
+            margin: 10px auto 0 auto;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            color: #0078d4;
+        }
+
+        /* 頁尾 */
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.9rem;
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">SDGs Project</div>
+        <nav>
+            <a href="#">首頁</a>
+            <a href="#">關於核心目標</a>
+            <a href="#">最新消息</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>歡迎來到 SDGs</h1>
+        <p>永續發展目標（Sustainable Development Goals）是聯合國呼籲全球共同採取的行動，旨在消除貧窮、保護地球，並確保所有人享有和平與繁榮。</p>
+        <a href="#" class="btn">探索 17 項核心目標</a>
+    </section>
+
+    <section class="intro-section">
+        <h2>三大核心面向</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>經濟成長</h3>
+                <p>促進包容且永續的經濟成長，讓每個人都能獲得尊嚴勞動與公平的發展機會。</p>
+            </div>
+            <div class="card">
+                <h3>社會進步</h3>
+                <p>致力於消除貧窮與飢餓，全面提升醫療教育品質，實現性別平等與社會正義。</p>
+            </div>
+            <div class="card">
+                <h3>環境保護</h3>
+                <p>積極應對氣候變遷，保護海洋與陸地生態系統，確保水資源與能源的永續管理。</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 SDGs 永續推廣平台. 讓我們攜手改變世界。</p>
+    </footer>
+
+</body>
+</html>
