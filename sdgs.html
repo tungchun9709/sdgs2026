@@ -1,0 +1,656 @@
+```html
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>2026 SDGs 接待手冊</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Noto Serif TC & Noto Sans TC -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=Noto+Serif+TC:wght@500;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Noto Sans TC', 'sans-serif'],
+            serif: ['Noto Serif TC', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* 莫蘭迪大地色系滾動條 */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F4EFEA;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #D2C4B1;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #C59B8B;
+    }
+    .scrollbar-none::-webkit-scrollbar {
+      display: none;
+    }
+    .scrollbar-none {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="bg-[#F4EFEA] text-[#5C524E] font-sans antialiased min-h-screen flex flex-col">
+
+  <!-- 頂部裝飾與大會標題 -->
+  <header class="bg-[#8FA18F] text-[#FAF8F5] py-8 px-6 shadow-sm border-b border-[#E2DDD5] relative overflow-hidden shrink-0">
+    <!-- 圓弧裝飾背景 -->
+    <div class="absolute right-[-40px] top-[-40px] w-40 h-40 rounded-full bg-[#C59B8B] opacity-30"></div>
+    <div class="absolute left-[-20px] bottom-[-30px] w-32 h-32 rounded-full bg-[#D2C4B1] opacity-20"></div>
+
+    <div class="max-w-4xl mx-auto relative z-10">
+      <p class="text-[10px] tracking-widest uppercase opacity-90 mb-1">2026 SDGs International Exchange</p>
+      <h1 class="text-2xl md:text-3xl font-serif font-bold tracking-normal mb-2 text-[#FAF8F5]">
+        早稻田大學本庄高等學院 接待日程手冊
+      </h1>
+      <p class="text-xs opacity-85 font-light">
+        活動期間：2026/07/06 (一) - 2026/07/08 (三) | 台南・成大・景點引導
+      </p>
+    </div>
+  </header>
+
+  <!-- 主內容區 -->
+  <main class="max-w-4xl w-full mx-auto px-4 py-6 flex-1">
+    
+    <!-- 今日概覽卡片 -->
+    <div id="overview-card" class="bg-[#FAF8F5] rounded-xl p-4 mb-6 border border-[#E2DDD5] shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all duration-300">
+      <div>
+        <span class="text-[10px] text-[#8FA18F] font-bold tracking-wider uppercase block mb-1">CURRENT DAY</span>
+        <h2 id="overview-date" class="text-lg font-serif font-bold text-[#5C524E]">
+          2026/07/06 (星期一)
+        </h2>
+      </div>
+      <div class="flex items-center gap-6 border-t md:border-t-0 md:border-l border-[#E2DDD5] pt-3 md:pt-0 md:pl-6">
+        <div>
+          <span class="text-xs text-gray-400 block">今日服裝規定</span>
+          <span id="overview-dresscode" class="inline-flex items-center px-3 py-1 mt-1 rounded-full text-xs font-medium bg-[#F5F2EB] text-[#5C524E] border border-[#E2DDD5]">
+            <svg class="w-3 h-3 mr-1.5 text-[#C59B8B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+            </svg>
+            學校制服
+          </span>
+        </div>
+        <div>
+          <span class="text-xs text-gray-400 block">任務清單進度</span>
+          <span id="overview-progress" class="text-sm font-semibold mt-1 block">
+            已完成 0 / 10
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 標籤頁面導覽 -->
+    <div class="flex border-b border-[#E2DDD5] mb-6 overflow-x-auto scrollbar-none gap-1">
+      <button onclick="switchTab('day1')" id="tab-day1" class="tab-btn py-3 px-5 text-sm font-medium tracking-wide transition-all duration-200 whitespace-nowrap border-b-2 border-[#C59B8B] text-[#C59B8B] font-semibold">
+        一日目 (7/6)
+      </button>
+      <button onclick="switchTab('day2')" id="tab-day2" class="tab-btn py-3 px-5 text-sm font-medium tracking-wide transition-all duration-200 whitespace-nowrap border-b-2 border-transparent text-gray-400 hover:text-[#5C524E]">
+        二日目 (7/7)
+      </button>
+      <button onclick="switchTab('day3')" id="tab-day3" class="tab-btn py-3 px-5 text-sm font-medium tracking-wide transition-all duration-200 whitespace-nowrap border-b-2 border-transparent text-gray-400 hover:text-[#5C524E]">
+        三日目 (7/8)
+      </button>
+      <button onclick="switchTab('checklist')" id="tab-checklist" class="tab-btn py-3 px-5 text-sm font-medium tracking-wide transition-all duration-200 whitespace-nowrap border-b-2 border-transparent ml-auto text-gray-400 hover:text-[#5C524E]">
+        接待檢查哨
+      </button>
+    </div>
+
+    <!-- 搜尋欄 -->
+    <div id="search-container" class="relative mb-6">
+      <input
+        type="text"
+        id="search-input"
+        placeholder="搜尋行程、地點、提醒備忘..."
+        oninput="handleSearch()"
+        class="w-full bg-[#FAF8F5] border border-[#E2DDD5] rounded-xl py-3 pl-11 pr-4 text-sm text-[#5C524E] focus:outline-none focus:ring-1 focus:ring-[#8FA18F] placeholder-gray-400 transition-all duration-300"
+      />
+      <div class="absolute left-4 top-3.5 text-gray-400">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- 快捷功能區 (Day 1 晚宴與 Day 2 路線) -->
+    <div id="shortcut-day1" class="shortcut-banner bg-gradient-to-r from-[#FAF8F5] to-[#F3ECE6] rounded-xl p-4 border border-[#E2DDD5] shadow-sm flex items-center justify-between mb-6">
+      <div>
+        <h4 class="text-xs font-semibold uppercase text-[#C59B8B] tracking-wider">Day 1 晚宴特別企劃</h4>
+        <p class="text-xs text-gray-600 mt-0.5">歡迎晚宴備有中日文菜單對照譯名表</p>
+      </div>
+      <button onclick="openMenuModal()" class="bg-[#C59B8B] hover:bg-[#B3897A] text-white text-xs px-4 py-2 rounded-lg transition-colors shadow-sm font-medium">
+        查看晚宴菜單
+      </button>
+    </div>
+
+    <div id="shortcut-day2" class="shortcut-banner hidden bg-gradient-to-r from-[#FAF8F5] to-[#EBEFEA] rounded-xl p-4 border border-[#E2DDD5] shadow-sm mb-6">
+      <h4 class="text-xs font-semibold uppercase text-[#8FA18F] tracking-wider mb-2">Day 2 小北夜市推薦路線</h4>
+      <div class="flex flex-wrap items-center gap-1.5">
+        <span class="text-[11px] bg-[#FAF8F5] border border-gray-200 px-2 py-0.5 rounded text-gray-600">小北觀光夜市</span>
+        <span class="text-[10px] text-gray-400">➡️</span>
+        <span class="text-[11px] bg-[#FAF8F5] border border-gray-200 px-2 py-0.5 rounded text-gray-600">新光三越</span>
+        <span class="text-[10px] text-gray-400">➡️</span>
+        <span class="text-[11px] bg-[#FAF8F5] border border-gray-200 px-2 py-0.5 rounded text-gray-600">8點圖書文具廣場</span>
+        <span class="text-[10px] text-gray-400">➡️</span>
+        <span class="text-[11px] bg-[#FAF8F5] border border-gray-200 px-2 py-0.5 rounded text-gray-600">寶雅</span>
+        <span class="text-[10px] text-gray-400">➡️</span>
+        <span class="text-[11px] bg-[#FAF8F5] border border-gray-200 px-2 py-0.5 rounded text-gray-600">小北新成功夜市</span>
+      </div>
+    </div>
+
+    <!-- 主行程內容區 -->
+    <div id="itinerary-timeline" class="relative border-l-2 border-[#E2DDD5] ml-4 md:ml-6 pl-6 md:pl-8 space-y-6">
+      <!-- 動態插入行程項目 -->
+    </div>
+
+    <!-- 檢核表內容區 (預設隱藏) -->
+    <div id="checklist-section" class="hidden space-y-6">
+      <div class="bg-[#FAF8F5] rounded-xl p-6 border border-[#E2DDD5] shadow-sm">
+        <h3 class="text-base font-serif font-bold mb-1">接待關鍵任務清單</h3>
+        <p class="text-xs text-gray-400 mb-6">請接待人員在各項任務完成後手動勾選，系統會自動儲存您的進度。</p>
+        
+        <div id="checklist-items" class="divide-y divide-[#E2DDD5]">
+          <!-- 動態插入檢核項目 -->
+        </div>
+      </div>
+
+      <!-- 額外備註 -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-[#EAE5DF] rounded-xl p-5 border border-[#DCD6CE]">
+          <h4 class="font-serif font-bold text-sm mb-2 text-[#5C524E]">大會接待通訊要點</h4>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            若有任何突發狀況，請立即向大會接待組回報。引導日本學生移動時，請派一員走在最末端確保無人落單。
+          </p>
+        </div>
+        <div class="bg-[#E0E5E0] rounded-xl p-5 border border-[#CED4CE]">
+          <h4 class="font-serif font-bold text-sm mb-2 text-[#5C524E]">台南氣候與防護</h4>
+          <p class="text-xs text-gray-600 leading-relaxed">
+            七月的台南多晴朗炎熱，且午後常有雷陣雨。請接待人員隨身攜帶雨傘、雨衣，並主動關心貴賓的補水與防曬狀況。
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- 頁腳 -->
+  <footer class="text-center py-10 text-[11px] text-gray-400 max-w-4xl mx-auto border-t border-[#E2DDD5] mt-12 w-full px-4 space-y-1 shrink-0">
+    <p>2026 SDGs Reception Escort Companion App</p>
+    <p>由大會接待組統一整理製作 ｜ 早稻田大學本庄高等學院 專用</p>
+  </footer>
+
+  <!-- 晚宴菜單 Modal -->
+  <div id="menu-modal" class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-30 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-[#FAF8F5] w-full max-w-lg rounded-2xl shadow-xl overflow-hidden border border-[#E2DDD5] transition-all">
+      <div class="bg-[#C59B8B] text-[#FAF8F5] p-5 relative">
+        <h3 class="text-lg font-serif font-bold">Waseda Honjo Welcome Banquet</h3>
+        <p class="text-xs opacity-90 mt-1">大會歡迎晚宴 ｜ 中日對照菜單譯名</p>
+        <button onclick="closeMenuModal()" class="absolute right-4 top-4 text-[#FAF8F5] hover:opacity-80 p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-4 max-h-[50vh] overflow-y-auto" id="dinner-menu-container">
+        <!-- 菜色動態渲染 -->
+      </div>
+
+      <div class="bg-[#F5F2EB] p-4 text-center border-t border-[#E2DDD5]">
+        <span class="text-xs text-gray-500 font-medium">晚宴桌次配置：D 桌</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 行程細節 Modal -->
+  <div id="detail-modal" class="fixed inset-0 z-50 bg-black bg-opacity-30 backdrop-blur-sm hidden items-center justify-center p-4">
+    <div class="bg-[#FAF8F5] w-full max-w-md rounded-2xl shadow-xl overflow-hidden border border-[#E2DDD5] transition-all">
+      <div class="p-5 bg-[#FAF8F5] border-b border-[#E2DDD5] relative flex justify-between items-start">
+        <div>
+          <span id="detail-time" class="text-xs bg-[#F5F2EB] text-gray-600 px-2 py-0.5 rounded font-medium"></span>
+          <h3 id="detail-title" class="text-base font-serif font-bold text-[#5C524E] mt-2"></h3>
+        </div>
+        <button onclick="closeDetailModal()" class="text-gray-400 hover:text-gray-600 p-1">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="p-6 space-y-4 text-sm text-[#5C524E]">
+        <div>
+          <span class="text-xs text-gray-400 block mb-1">場地位置</span>
+          <div id="detail-location" class="flex items-center text-sm font-semibold"></div>
+        </div>
+
+        <div>
+          <span class="text-xs text-gray-400 block mb-1">任務描述與背景</span>
+          <p id="detail-description" class="text-xs text-gray-600 leading-relaxed bg-[#FDFDFB] p-3 rounded-lg border border-[#F5F2EB]"></p>
+        </div>
+
+        <div id="detail-alert-box" class="bg-[#FAF0EC] border-l-4 border-[#C59B8B] p-3 rounded-r-lg hidden">
+          <span class="text-[10px] uppercase font-bold text-[#C59B8B] tracking-wider block mb-1">接待注意事項與交代</span>
+          <p id="detail-notes" class="text-xs text-[#5C524E] font-medium leading-relaxed"></p>
+        </div>
+
+        <!-- 額外關聯按鈕 -->
+        <button id="detail-menu-btn" onclick="openBanquetFromDetail()" class="w-full bg-[#C59B8B] hover:bg-[#B3897A] text-white text-xs py-2.5 rounded-lg transition-colors font-medium text-center hidden">
+          點此查看 D 桌歡迎晚宴菜單
+        </button>
+      </div>
+
+      <div class="bg-[#F5F2EB] p-4 text-center border-t border-[#E2DDD5]">
+        <button onclick="closeDetailModal()" class="text-xs text-gray-500 hover:text-[#5C524E] font-medium">關閉視窗</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 資料庫 JavaScript -->
+  <script>
+    // 行程資料
+    const itineraryData = {
+      day1: {
+        date: '2026/07/06',
+        weekday: '星期一',
+        dressCode: '學校制服',
+        items: [
+          { id: 'd1-1', time: '08:00 前', title: '飯店大廳集合與接待整備', location: '飯店大廳', description: '接待人員集合，領取校牌與名牌。確認所有接待用品齊全。', importantNotes: '務必在此時間點前完成校牌與名牌的領取與分發。', alert: false },
+          { id: 'd1-2', time: '08:45 前', title: '抵達國際會議廳', location: '國際會議廳', description: '協助引導貴賓與學生抵達國際會議廳。抵達後向負責人報告，並主動告知與引導化妝室位置。', importantNotes: '展現禮貌與主動性，抵達時告知洗手間方位是重點接待步驟。', alert: false },
+          { id: 'd1-3', time: '09:00 - 09:20', title: '開幕式', location: '國際會議廳', description: '大會正式開幕。接待人員座位安排在走道上以利隨時提供協助。', importantNotes: '接待座位：第六排面對舞台最左五個、校長安排在中間第一個位置。', alert: true },
+          { id: 'd1-4', time: '09:20 - 10:00', title: '開幕演講', location: '國際會議廳', description: '聆聽大會主題演講。接待人員維持現場秩序與走道引導。', importantNotes: '注意維持安靜，觀察貴賓是否有臨時需求。', alert: false },
+          { id: 'd1-5', time: '10:00 - 10:10', title: '茶敘時光', location: '茶敘區', description: '點心時間，引導貴賓享用茶點。', importantNotes: '注意引導動線，避免人潮擁擠。', alert: false },
+          { id: 'd1-6', time: '10:10 - 12:00', title: '第一階段報告', location: '國際會議廳', description: '專題發表第一階段。接待人員需移坐至前方的貴賓（Guest）區。', importantNotes: '座位異動：請注意移動至前方 Guest 區，展現尊重。', alert: true },
+          { id: 'd1-7', time: '12:00 - 12:30', title: '移動至小禮堂', location: '小禮堂', description: '第一階段報告結束，引導全體人員前往小禮堂。', importantNotes: '注意維持動線流暢，不脫隊。', alert: false },
+          { id: 'd1-8', time: '12:30 - 13:30', title: '午餐時間', location: '指定餐區 / 小禮堂', description: '享用午餐與短暫休整。', importantNotes: '確認每位貴賓及學生皆有拿到餐點。', alert: false },
+          { id: 'd1-9', time: '13:30 - 15:00', title: '第二階段報告', location: '國際會議廳', description: '專題發表第二階段。接待重點：本場次發表順序為 2 與 3，需協助拍照並注意時間提醒。', importantNotes: '任務：針對發表順序 2、3 進行拍照紀錄，並做好時間提醒。', alert: true },
+          { id: 'd1-10', time: '15:00 - 15:15', title: '茶敘時光', location: '茶敘區', description: '點心與交流時間。', importantNotes: '提醒貴賓接下來的場次地點。', alert: false },
+          { id: 'd1-11', time: '15:15 - 16:45', title: '第三階段報告', location: '5F會議室 或 科教視聽教室', description: '自由選擇場地：可選擇留在5樓，或前往科學教育視聽教室。', importantNotes: '確認接待對象的分流選擇，並跟隨引導。', alert: false },
+          { id: 'd1-12', time: '16:45 - 17:20', title: '海報展覽時間', location: '國際會議廳', description: '海報交流與展覽。注意：必須於 17:10 前協助將海報收好並裝入海報筒中。', importantNotes: '限時任務：17:10 前務必收妥海報並妥善裝筒。', alert: true },
+          { id: 'd1-13', time: '17:20 - 18:00', title: '閉幕式', location: '國際會議廳', description: '首日活動閉幕典禮，為當日發表劃下句點。', importantNotes: '閉幕後準備引導至晚宴場地。', alert: false },
+          { id: 'd1-14', time: '18:00 - 20:30', title: '大會歡迎晚宴', location: '晚宴廳 (桌次：D桌)', description: '盛大的歡迎晚宴，提供精緻的中日對照菜色。接待人員請至 D桌 就座。', importantNotes: '接待桌次：D桌。可點擊「查看晚宴菜單」對照精美菜色譯名。', alert: true, hasMenu: true },
+          { id: 'd1-15', time: '20:30 起', title: '返回飯店', location: '飯店', description: '結束首日行程返回飯店。務必攜帶海報返回，勿遺漏在會場。', importantNotes: '關鍵備忘：記得將海報帶回飯店保管！', alert: true }
+        ]
+      },
+      day2: {
+        date: '2026/07/07',
+        weekday: '星期二',
+        dressCode: '黑色 T 恤',
+        items: [
+          { id: 'd2-1', time: '08:00 前', title: '飯店大廳集合與出發準備', location: '飯店大廳', description: '接待人員飯店大廳集合，領取當日校牌與名牌。', importantNotes: '檢查個人儀容，今日穿著黑色 T 恤。', alert: false },
+          { id: 'd2-2', time: '08:45 前', title: '抵達成功大學社科院', location: '成功大學光復校區', description: '引導隊伍步行穿過成功大學光復校區正門（雕像處），途經榕園，前往社科院。', importantNotes: '路線導引：走光復校區正門(雕像) ➡️ 經榕園 ➡️ 抵達社科院。', alert: false },
+          { id: 'd2-3', time: '09:00 前', title: '大演講廳報到', location: '社科院北棟 3F 大演講廳', description: '於大演講廳完成報到手續並引導就座。', importantNotes: '請注意引導動線，避免與其他學校隊伍碰撞。', alert: false },
+          { id: 'd2-4', time: '09:00 - 09:10', title: '致歡迎詞 (Remarks)', location: '社科院北棟 3F 大演講廳', description: '大會致詞儀式。', importantNotes: '保持安靜聆聽。', alert: false },
+          { id: 'd2-5', time: '09:10 - 09:30', title: '成功大學學校介紹', location: '社科院北棟 3F 大演講廳', description: '成大特色、歷史與學術環境簡介。', importantNotes: '可作為後續與日本高中生交流的話題。', alert: false },
+          { id: 'd2-6', time: '09:30 - 10:30', title: '學術專題演講', location: '社科院北棟 3F 大演講廳', description: '演講主題：Ethical Risks Arising from Mind-Manipulative AI Systems (心智操縱型人工智慧系統帶來的倫理風險)。', importantNotes: '極具前瞻性的 AI 倫理課題，引導同學認真聆聽。', alert: false },
+          { id: 'd2-7', time: '10:30 - 10:40', title: '步行前往總圖書館', location: '成功大學總圖書館', description: '講畢整隊，引導移動至成大總圖。', importantNotes: '注意安全，維持隊伍整齊。', alert: false },
+          { id: 'd2-8', time: '10:40 - 11:40', title: '成大總圖書館參觀', location: '成功大學總圖書館', description: '圖書館導覽參觀。本次接待學校分在「第 8 組」。', importantNotes: '重要：我們屬於第 8 組，請確保所有組員緊跟導覽員，勿脫隊。', alert: true },
+          { id: 'd2-9', time: '11:50 - 12:50', title: '午餐時間', location: '指定用餐區', description: '享用精緻便當與短暫午休。', importantNotes: '確認日本學生的飲食習慣或素食需求是否滿足。', alert: false },
+          { id: 'd2-10', time: '12:50 - 13:00', title: '步行前往科學教育中心', location: '科學教育中心', description: '整隊出發，前往下午的工作坊場地。', importantNotes: '提前清點人數，準時出發。', alert: false },
+          { id: 'd2-11', time: '13:00 - 14:00', title: '科學工作坊一：IQ Light 與歐拉特徵數', location: '物理學系館 1F 36173教室', description: '主題：IQ light and Euler characteristic。透過動手做理解物理與幾何概念。', importantNotes: '地點在物理系館1樓 36173 教室。協助發放材料。', alert: true },
+          { id: 'd2-12', time: '14:00 - 15:00', title: '科學工作坊二：在巧克力中放入彩虹', location: '物理學系館指定實驗室', description: '主題：Putting Rainbows into Chocolate。有趣的科學手作實驗。', importantNotes: '注意操作安全，引導學生完成作品。', alert: false },
+          { id: 'd2-13', time: '15:00 起', title: '返回飯店與自由探索', location: '飯店 / 鄰近區域', description: '搭車返回飯店。至 17:00 前為自由活動時間，可到處逛逛看看。', importantNotes: '15:00 - 17:00 期間可自由放鬆，但請注意安全與回報機制。', alert: false },
+          { id: 'd2-14', time: '17:00', title: '飯店大廳集合與費用發放', location: '飯店大廳', description: '全體集合，發放夜市零用金。7人共發放 1400 元。', importantNotes: '重要：集合領取公費，7人共計 1400 元（平均每人 200 元）。', alert: true },
+          { id: 'd2-15', time: '17:20 - 18:00', title: '搭車前往小北夜市', location: '交通巴士 (B 車)', description: '乘坐 B 車前往台南特色夜市。抵達後提醒所有人：下車地點即為回程上車地點。', importantNotes: '安全提醒：務必再三強調「下車地點 = 上車地點」，避免走失。', alert: true },
+          { id: 'd2-16', time: '18:00 - 20:30', title: '台南夜市文化體驗', location: '小北夜市與周邊商圈', description: '導覽體驗台南在地夜市。推薦路線：小北觀光夜市 ➡️ 新光三越 ➡️ 8點圖書文具生活廣場 ➡️ 寶雅 ➡️ 小北新成功觀光夜市。', importantNotes: '路線豐富，包含小北觀光夜市、百貨公司、文具店及美妝店，請協助導引。', alert: false },
+          { id: 'd2-17', time: '20:30', title: '夜市集合', location: '夜市指定集合點 (下車處)', description: '全體於原下車處集合，清點人數，準備登車。', importantNotes: '不遲到、不落單。務必清點 7 人全數到齊。', alert: true },
+          { id: 'd2-18', time: '21:00 前', title: '發車返回飯店', location: '交通巴士', description: '21:00 準時發車返回飯店休整。', importantNotes: '確認所有人安全上車。', alert: false }
+        ]
+      },
+      day3: {
+        date: '2026/07/08',
+        weekday: '星期三',
+        dressCode: '黑色 T 恤',
+        items: [
+          { id: 'd3-1', time: '08:10 前', title: '飯店大廳集合', location: '飯店大廳', description: '接待人員與師生集合。', importantNotes: '備忘：7/8 晚上續住，今日不需寄放行李，可以將大件行李留在房內。', alert: true },
+          { id: 'd3-2', time: '08:10 - 08:30', title: '出發前往學校', location: '學校會場', description: '搭乘巴士或步行前往學校。', importantNotes: '注意出發時效。', alert: false },
+          { id: 'd3-3', time: '09:00 起', title: '學校發車前往赤崁樓', location: '赤崁樓 (搭乘 B 車)', description: '學校集合發車，展開台南歷史文化之旅。全體搭乘 B 車。', importantNotes: '交通提示：請全體人員認明並搭乘 B 車。', alert: true },
+          { id: 'd3-4', time: '12:00 - 13:30', title: '精緻午餐饗宴', location: '煙波大飯店 (永福路一段269號)', description: '於台南煙波大飯店享用精緻午餐。', importantNotes: '地址：台南市中西區永福路一段269號。高質感用餐體驗。', alert: false },
+          { id: 'd3-5', time: '13:30 - 14:00', title: '文化與藝術漫步 & 團體合照', location: '司法博物館、台南市美術館二館', description: '參觀典雅的司法博物館，與現代感十足的美術館二館。此期間將拍攝重要團體照留念。', importantNotes: '拍照任務：於司法博物館或美術館二館前拍攝團體照，請維護好隊形與秩序。', alert: true },
+          { id: 'd3-6', time: '14:20', title: '返回飯店', location: '飯店 (搭乘 B 車)', description: '搭乘 B 車返抵飯店，圓滿結束 2026 SDGs 接待行程。', importantNotes: '確認隨身行李、紀念品皆已帶下車，互道感謝。', alert: false }
+        ]
+      }
+    };
+
+    const dinnerMenu = [
+      { zh: '精緻冷拼盤', jp: '前菜の盛り合わせ', furigana: 'ぜんさいのりあわせ' },
+      { zh: '古早海味羹', jp: '海鮮スープ', furigana: 'かいせんスープ' },
+      { zh: '銀絲紅蟳煲', jp: 'カニと春雨の土鍋', furigana: 'カニとはるさめのどなべ' },
+      { zh: '鮮露龍虎鮑', jp: 'アワビのオイスターソース煮', furigana: 'アワビのオイスターソースに' },
+      { zh: '春筍嫩雞盅', jp: '筍と鶏肉のスープ', furigana: 'たけのことけいにくのスープ' },
+      { zh: '沙拉文草蝦', jp: 'エビのマヨネーズ風味', furigana: 'エビのマヨネーズふうみ' },
+      { zh: '蜜汁豬肋排', jp: '豚スペアリブの蜂蜜焼き', furigana: 'ぶたスペアリブのはちみつやき' },
+      { zh: '雙味蓮子派', jp: '蓮の実のパイ', furigana: 'はすのみのパイ' },
+      { zh: '時令水果盤', jp: '季節のフルーツ', furigana: 'きせつのフルーツ' }
+    ];
+
+    const globalChecklist = [
+      { id: 'chk-badge', day: '一日目', title: '領取校牌與名牌' },
+      { id: 'chk-toilet', day: '一日目', title: '主動告知貴賓洗手間位置' },
+      { id: 'chk-seat', day: '一日目', title: '確認第六排舞台最左座位與校長位置' },
+      { id: 'chk-photo1', day: '一日目', title: '第二段報告 (序2、3) 拍照與提醒時間' },
+      { id: 'chk-poster', day: '一日目', title: '17:10 前收海報裝筒，並帶回飯店' },
+      { id: 'chk-group8', day: '二日目', title: '確認成大總圖參觀分在「第 8 組」' },
+      { id: 'chk-money', day: '二日目', title: '領取 7 人夜市零用錢共 1400 元' },
+      { id: 'chk-bus-remind', day: '二日目', title: '提醒夜市下車地點即為上車地點' },
+      { id: 'chk-luggage', day: '三日目', title: '確認續住，告知行李不需寄放' },
+      { id: 'chk-photo2', day: '三日目', title: '司法博物館、美術二館拍攝團體照' }
+    ];
+
+    // 全域變數
+    let currentTab = 'day1';
+    let searchQuery = '';
+    let checkedTasks = {};
+
+    // 初始化讀取進度
+    function initProgress() {
+      const stored = localStorage.getItem('sdgs_reception_progress');
+      if (stored) {
+        try {
+          checkedTasks = JSON.parse(stored);
+        } catch (e) {
+          checkedTasks = {};
+        }
+      }
+      updateProgressUI();
+    }
+
+    // 儲存進度
+    function saveProgress() {
+      localStorage.setItem('sdgs_reception_progress', JSON.stringify(checkedTasks));
+      updateProgressUI();
+    }
+
+    // 更新進度條顯示
+    function updateProgressUI() {
+      const completedCount = Object.values(checkedTasks).filter(Boolean).length;
+      const progressText = `已完成 ${completedCount} / ${globalChecklist.length}`;
+      document.getElementById('overview-progress').innerText = progressText;
+    }
+
+    // 切換分頁
+    function switchTab(tabId) {
+      currentTab = tabId;
+      
+      // 切換按鈕樣式
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('border-[#C59B8B]', 'border-[#8FA18F]', 'border-[#8DA08C]', 'border-[#5C524E]', 'text-[#C59B8B]', 'text-[#8FA18F]', 'text-[#8DA08C]', 'text-[#5C524E]', 'font-semibold');
+        btn.classList.add('border-transparent', 'text-gray-400');
+      });
+
+      const activeBtn = document.getElementById(`tab-${tabId}`);
+      activeBtn.classList.remove('border-transparent', 'text-gray-400');
+      
+      let themeColor = 'border-[#C59B8B] text-[#C59B8B]';
+      if (tabId === 'day2') themeColor = 'border-[#8FA18F] text-[#8FA18F]';
+      if (tabId === 'day3') themeColor = 'border-[#8DA08C] text-[#8DA08C]';
+      if (tabId === 'checklist') themeColor = 'border-[#5C524E] text-[#5C524E]';
+      
+      activeBtn.className += ` ${themeColor} font-semibold`;
+
+      // 切換面板與快捷 Banner
+      const timeline = document.getElementById('itinerary-timeline');
+      const checklistSec = document.getElementById('checklist-section');
+      const searchContainer = document.getElementById('search-container');
+      const overviewCard = document.getElementById('overview-card');
+
+      document.querySelectorAll('.shortcut-banner').forEach(b => b.classList.add('hidden'));
+
+      if (tabId === 'checklist') {
+        timeline.classList.add('hidden');
+        searchContainer.classList.add('hidden');
+        overviewCard.classList.add('hidden');
+        checklistSec.classList.remove('hidden');
+        renderChecklist();
+      } else {
+        timeline.classList.remove('hidden');
+        searchContainer.classList.remove('hidden');
+        overviewCard.classList.remove('hidden');
+        checklistSec.classList.add('hidden');
+        
+        // 更新上方今日服裝概覽
+        const dayData = itineraryData[tabId];
+        document.getElementById('overview-date').innerText = `${dayData.date} (${dayData.weekday})`;
+        document.getElementById('overview-dresscode').innerHTML = `
+          <svg class="w-3 h-3 mr-1.5 text-[#C59B8B]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+          </svg>${dayData.dressCode}
+        `;
+
+        // 顯示對應捷徑
+        const shortcut = document.getElementById(`shortcut-${tabId}`);
+        if (shortcut) shortcut.classList.remove('hidden');
+
+        renderTimeline();
+      }
+    }
+
+    // 搜尋功能
+    function handleSearch() {
+      searchQuery = document.getElementById('search-input').value.trim().toLowerCase();
+      renderTimeline();
+    }
+
+    // 渲染時間線行程
+    function renderTimeline() {
+      const timeline = document.getElementById('itinerary-timeline');
+      timeline.innerHTML = '';
+      
+      const dayData = itineraryData[currentTab];
+      if (!dayData) return;
+
+      const items = dayData.items.filter(item => {
+        if (!searchQuery) return true;
+        return item.title.toLowerCase().includes(searchQuery) || 
+               item.location.toLowerCase().includes(searchQuery) || 
+               item.description.toLowerCase().includes(searchQuery) ||
+               item.time.toLowerCase().includes(searchQuery);
+      });
+
+      if (items.length === 0) {
+        timeline.innerHTML = `
+          <div class="bg-[#FAF8F5] rounded-xl p-12 text-center border border-[#E2DDD5] ml-[-24px] md:ml-[-32px]">
+            <p class="text-gray-400 text-sm">無符合關鍵字的日程項目，請重新輸入。</p>
+          </div>
+        `;
+        return;
+      }
+
+      items.forEach(item => {
+        const isAlert = item.alert;
+        const alertBorder = isAlert ? 'border-l-4 border-l-[#C59B8B]' : 'border-[#E2DDD5]';
+        const dotBorder = isAlert ? 'border-[#C59B8B] scale-110' : 'border-gray-300';
+
+        const itemHTML = `
+          <div class="relative group transition-all duration-300">
+            <!-- 圓點標記 -->
+            <span class="absolute left-[-31px] md:left-[-39px] top-1.5 w-4 h-4 rounded-full border-2 bg-[#FAF8F5] transition-all duration-300 ${dotBorder}"></span>
+            
+            <!-- 卡片 -->
+            <div onclick="openDetailModal(${JSON.stringify(item).replace(/"/g, '&quot;')})" 
+                 class="bg-[#FAF8F5] hover:bg-[#FDFDFB] rounded-xl p-5 border shadow-sm transition-all duration-300 cursor-pointer ${alertBorder} hover:shadow-md hover:-translate-y-0.5">
+              
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                <span class="text-xs font-semibold text-gray-500 bg-[#F5F2EB] px-2.5 py-1 rounded-md">
+                  ${item.time}
+                </span>
+                <span class="text-xs text-gray-400 flex items-center">
+                  <svg class="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  ${item.location}
+                </span>
+              </div>
+
+              <h3 class="text-sm font-bold text-[#5C524E] leading-snug group-hover:text-gray-900 transition-colors">
+                ${item.title}
+              </h3>
+              <p class="text-xs text-gray-500 mt-2 line-clamp-2">
+                ${item.description}
+              </p>
+
+              ${item.importantNotes ? `
+                <div class="mt-3 pt-3 border-t border-[#F5F2EB] flex items-center justify-between">
+                  <span class="text-[11px] text-gray-400 italic truncate max-w-[80%]">
+                    ${item.importantNotes}
+                  </span>
+                  <span class="text-xs text-[#8FA18F] font-medium flex items-center gap-1 group-hover:translate-x-1 transition-transform">
+                    詳細
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        `;
+        timeline.insertAdjacentHTML('beforeend', itemHTML);
+      });
+    }
+
+    // 渲染檢查哨
+    function renderChecklist() {
+      const container = document.getElementById('checklist-items');
+      container.innerHTML = '';
+
+      globalChecklist.forEach(task => {
+        const isChecked = !!checkedTasks[task.id];
+        const checkClass = isChecked ? 'bg-[#8FA18F] border-[#8FA18F]' : 'border-[#5C524E] opacity-60';
+        const lineClass = isChecked ? 'line-through text-gray-400 font-light' : 'text-[#5C524E] font-medium';
+        const checkIcon = isChecked ? `
+          <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
+          </svg>
+        ` : '';
+
+        const itemHTML = `
+          <div onclick="toggleTask('${task.id}')" class="flex items-center py-4 cursor-pointer hover:bg-[#FDFDFB] transition-colors">
+            <div class="mr-4">
+              <div class="w-5 h-5 rounded border flex items-center justify-center transition-all ${checkClass}">
+                ${checkIcon}
+              </div>
+            </div>
+            <div class="flex-1">
+              <span class="text-[10px] text-gray-400 block mb-0.5">${task.day}</span>
+              <p class="text-xs ${lineClass}">
+                ${task.title}
+              </p>
+            </div>
+          </div>
+        `;
+        container.insertAdjacentHTML('beforeend', itemHTML);
+      });
+    }
+
+    // 切換任務勾選狀態
+    function toggleTask(id) {
+      checkedTasks[id] = !checkedTasks[id];
+      saveProgress();
+      renderChecklist();
+    }
+
+    // 晚宴菜單 Modal 控制
+    function openMenuModal() {
+      const menuContainer = document.getElementById('dinner-menu-container');
+      menuContainer.innerHTML = '';
+      
+      dinnerMenu.forEach((dish, i) => {
+        const dishHTML = `
+          <div class="flex justify-between items-start gap-4 pb-3 border-b border-[#F5F2EB] last:border-b-0">
+            <div class="flex-1">
+              <span class="text-[10px] text-[#C59B8B] font-bold block mb-0.5">第 ${i+1} 道</span>
+              <h4 class="text-xs font-bold text-[#5C524E]">${dish.zh}</h4>
+            </div>
+            <div class="text-right flex-1">
+              <p class="text-[10px] text-gray-400 font-light tracking-wide">${dish.furigana}</p>
+              <p class="text-xs font-semibold text-[#8FA18F]">${dish.jp}</p>
+            </div>
+          </div>
+        `;
+        menuContainer.insertAdjacentHTML('beforeend', dishHTML);
+      });
+
+      const modal = document.getElementById('menu-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeMenuModal() {
+      const modal = document.getElementById('menu-modal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+
+    // 行程詳細 Modal 控制
+    function openDetailModal(item) {
+      document.getElementById('detail-time').innerText = item.time;
+      document.getElementById('detail-title').innerText = item.title;
+      document.getElementById('detail-location').innerHTML = `
+        <svg class="w-4 h-4 mr-2 text-[#8FA18F]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+        </svg>
+        ${item.location}
+      `;
+      document.getElementById('detail-description').innerText = item.description;
+
+      const alertBox = document.getElementById('detail-alert-box');
+      if (item.importantNotes) {
+        document.getElementById('detail-notes').innerText = item.importantNotes;
+        alertBox.classList.remove('hidden');
+      } else {
+        alertBox.classList.add('hidden');
+      }
+
+      // 晚宴特別按鈕
+      const menuBtn = document.getElementById('detail-menu-btn');
+      if (item.hasMenu) {
+        menuBtn.classList.remove('hidden');
+      } else {
+        menuBtn.classList.add('hidden');
+      }
+
+      const modal = document.getElementById('detail-modal');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+
+    function closeDetailModal() {
+      const modal = document.getElementById('detail-modal');
+      modal.classList.remove('flex');
+      modal.classList.add('hidden');
+    }
+
+    function openBanquetFromDetail() {
+      closeDetailModal();
+      openMenuModal();
+    }
+
+    // 網頁載入時啟動
+    window.onload = function() {
+      initProgress();
+      switchTab('day1');
+    };
+  </script>
+</body>
+</html>
+
+```
